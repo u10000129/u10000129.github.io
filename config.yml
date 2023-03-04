@@ -1,0 +1,71 @@
+baseURL: "https://u10000129.github.io/"
+languageCode: en-us
+title: BH's Tech Blog
+paginate: 5
+theme: PaperMod
+
+params:
+  env: production
+
+  profileMode:
+    enabled: true
+    subtitle: "Hi! I'm Bing-Han 👍. This blog consists of a collection of my learning notes. Besides writing blogs, I'm currently working as a machine learning engineer at SinoPac Holdings."
+    imageUrl: img/profile.jpg
+
+  SocialIcons:
+    - name: "facebook"
+      url: "https://www.facebook.com/profile.php?viewas=100000686899395&id=100002467099240"
+    - name: "instagram"
+      url: "https://www.instagram.com/q1220022/"
+    - name: "github"
+      url: "https://github.com/u10000129"
+    - name: "linkedin"
+      url: "https://www.linkedin.com/in/ping-han-chiang/"
+    - name: "leetcode"
+      url: "https://leetcode.com/cheupei/"
+
+  ShowShareButtons: true
+  ShowReadingTime: true
+  ShowPostNavLinks: true
+
+  # for search
+  # https://fusejs.io/api/options.html
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+  assets:
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts
+      weight: 1
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 2
+    - identifier: archives
+      name: Archives
+      url: /archives/
+      weight: 3
+    - identifier: search
+      name: Search
+      url: /search
+      weight: 4
