@@ -11,7 +11,8 @@ params:
 
   profileMode:
     enabled: true
-    subtitle: "Hi! I'm Bing-Han 👍. This blog consists of a collection of my learning notes. Besides writing blogs, I'm currently working as a machine learning engineer at SinoPac Holdings."
+    title: 👋 Welcome to my tech blog!
+    subtitle: " I'm Bing-Han, a machine learning engineer at SinoPac Holdings. Here, you'll find my learning notes on various tech topics. Thanks for joining me on this journey!"
     imageUrl: img/profile.jpg
 
   SocialIcons:
