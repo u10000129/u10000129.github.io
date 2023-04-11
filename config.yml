@@ -1,5 +1,5 @@
 baseURL: "https://u10000129.github.io/"
-languageCode: en-us
+languageCode: zh-Hant
 title: BH's Tech Blog
 paginate: 5
 theme: PaperMod
@@ -9,10 +9,12 @@ googleAnalytics: G-VQMD1C25FB
 params:
   env: production
 
+  ShowToc: true
+
   profileMode:
     enabled: true
-    title: 👋 Welcome to my tech blog!
-    subtitle: " I'm Bing-Han, a machine learning engineer at SinoPac Holdings. Here, you'll find my learning notes on various tech topics. Thanks for joining me on this journey!"
+    title: "Hello World."
+    subtitle: "你好！歡迎來到我的技術部落格，這裡乘載了一些我的學習筆記🙂。"
     imageUrl: img/profile.jpg
 
   SocialIcons:
