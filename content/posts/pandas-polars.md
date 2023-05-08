@@ -9,32 +9,34 @@ cover:
     caption: "Polars Logo (source: [github](https://github.com/pola-rs/polars))"
 ---
 
-> TL；DR：假如目前的專案中有使用到 `pandas` 來處理**大量**表格化資料的話，請一定要嘗試看看使用 `polars` 替代 `pandas`，使用得當可以大幅降低程式碼執行時間喔！
+> TL；DR：假如目前的專案中有使用 [Pandas](https://pandas.pydata.org/) 來處理**大量**表格化資料的話，請一定要嘗試看看使用 [Polars](https://www.pola.rs/) 替代 Pandas，使用得當將可以大幅降低程式碼執行時間！
 
-### 引言
+### Links
 
-因為公司專案需求的關係，經常需要操作大規模的表格化資料，這時`pandas`相關的操作(I/O、前處理)通常需要大量的時間。
-
-在同事蔡博的推薦下，我嘗試將專案的中的`pandas`使用`polars`取代，結果發現程式執行時間顯著下降，因此希望向有同樣需求的人們推廣這個套件。
-
-在進入正文前，希望先給讀者一些概念，因此我隨機生成了`1,000,000`筆資料，每筆資料有五十個數值型欄位，及五十個類別型欄位。
-
-這時使用 `pandas` 讀取所需的時間為 7.59 秒，然而使用 `polars` 讀取只需要 1.16 秒，讀取速度有六倍的提升。
-
-|               	| 1M data (50 num, 50 cat) 	|
-|---------------	|:------------------------:	|
-| Polars(sec)   	|          1.1653          	|
-| Pandas(sec)   	|          9.4884          	|
-| Pandas 2(sec) 	|          7.3792          	|
-
-Table 1: Speed Comparision between Polars and Pandas.
-
-底下我會介紹一些 `polars` 優於 `pandas` 的地方，然後提供一些將 `polars` 導入機器學習專案的建議。
+- [Polars](https://www.pola.rs/)
+- Polars - [User Guide](https://pola-rs.github.io/polars-book/user-guide/)
+- Polars - [Migrate from Pandas](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/)
+- Polars - [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/)
 
 ### Why Polars?
 
-在我使用 `Polars` 的過程中，以下三點是我在使用上覺得 `Polars` 最具優勢的地方：
+平時在處理大量表格化資料的時候，I/O 和前處理經常會需要大量的時間，在同事蔡博的推薦下，嘗試使用了 Polars，結果發現速度相比於 Pandas 而言真的快上許多。
 
-1. Very fast IO
-2. Copy-on-write
-3. Query optimizations
+基於 Polars 的官方文件，Polars 的優勢來自於：
+
+1. 使用 [Rust](https://www.rust-lang.org/) 實作
+2. 遵循 [Apache Arrow](https://arrow.apache.org/) 規範
+
+
+### How Polars?
+
+這篇文章不會介紹如何使用 Polars，因為 Polars 官方的 [User Guide](https://pola-rs.github.io/polars-book/user-guide/) 已經寫得非常清楚！
+
+底下節錄兩個我認為特別重要的章節：
+
+1. [Migrate from Pandas to Polars](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/)
+2. [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/)
+
+Polars 和 Pandas 有許多相同的 function，但[語法上也有許多需要轉換的地方](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/#key-syntax-differences)，使用 Pandas 的語法去寫 Polars 有些情況可行，但是會失去 Polars 的速度優勢，所以需要特別注意。
+
+另外，使用 [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/) 去寫 Polars，Polars 會自行執行 [Query Plan](https://pola-rs.github.io/polars-book/user-guide/lazy/query_plan/#graphviz-visualization)，就像是 [DBMS](https://en.wikipedia.org/wiki/Database#Database_management_system) 在處理SQL！所以，請盡可能地使用 Lazy API。
