@@ -1,7 +1,7 @@
 ---
 title: "Polars v.s. Pandas：既生瑜何生亮！"
-date: 2023-03-27T21:03:55+08:00
-draft: true
+date: 2023-05-09T23:20:38+08:00
+draft: false
 tags: ["data", "preprocess"]
 cover:
     image: "img/polars_github_logo_rect_dark_name.svg"
