@@ -9,23 +9,17 @@ cover:
     caption: "Polars Logo (source: [github](https://github.com/pola-rs/polars))"
 ---
 
-> TL；DR：假如目前的專案中有使用 [Pandas](https://pandas.pydata.org/) 來處理**大量**表格化資料的話，請一定要嘗試看看使用 [Polars](https://www.pola.rs/) 替代 Pandas，使用得當將可以大幅降低程式碼執行時間！
-
-## Links
-
-- [Polars](https://www.pola.rs/)
-- Polars - [User Guide](https://pola-rs.github.io/polars-book/user-guide/)
-- Polars - [Migrate from Pandas](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/)
-- Polars - [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/)
+> TL；DR：假如目前的專案中有使用 [Pandas](https://pandas.pydata.org/) 來處理*大量*表格化資料的話，請一定要嘗試看看使用 [Polars](https://www.pola.rs/) 替代 Pandas，使用得當將可以大幅降低程式碼執行時間！
 
 ## Why Polars?
 
 平時在處理大量表格化資料的時候，I/O 和前處理經常會需要大量的時間，在同事蔡博的推薦下，嘗試使用了 Polars，結果發現速度相比於 Pandas 而言真的快上許多。
 
-基於 Polars 的官方文件，Polars 的優勢來自於：
+基於 Polars 的官方文件，Polars 的優勢包含：
 
-1. 使用 [Rust](https://www.rust-lang.org/) 實作
-2. 遵循 [Apache Arrow](https://arrow.apache.org/) 規範
+1. 使用 [Rust](https://www.rust-lang.org/) 實作，比起 Pandas 使用 Python 實作，更加底層
+2. 遵循 [Apache Arrow](https://arrow.apache.org/) 規範，使得在資源運用上更有效率
+3. etc.
 
 
 ## How Polars?
@@ -37,7 +31,7 @@ cover:
 1. [Migrate from Pandas to Polars](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/)
 2. [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/)
 
-Polars 和 Pandas 有許多相同的 function，但[語法上也有許多需要轉換的地方](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/#key-syntax-differences)，使用 Pandas 的語法去寫 Polars 有些情況可行，但是會失去 Polars 的速度優勢，所以需要特別注意。
+Polars 和 Pandas 有許多相同的 function，但語法上也有許多需要轉換的地方，請參考 [key-syntax-differences](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/#key-syntax-differences)，使用 Pandas 的語法去寫 Polars 有些情況可行，但是會無法發揮 Polars 的優勢，需要特別注意。
 
 另外，使用 [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/) 去寫 Polars，Polars 會自行執行 [Query Plan](https://pola-rs.github.io/polars-book/user-guide/lazy/query_plan/#graphviz-visualization)，就像是 [DBMS](https://en.wikipedia.org/wiki/Database#Database_management_system) 在處理SQL！所以，請盡可能地使用 Lazy API。
 
@@ -51,18 +45,15 @@ Polars 和 Pandas 有許多相同的 function，但[語法上也有許多需要�
 - [Aggregate](#aggregate)
 - [GroupBy](#groupby)
 
-在比較速度以前，我生成了總共有 101 維的假資料，1 維是 ID，50 維是 numerical value，50 維是 categorical value。而資料的數量為 10 萬、20 萬、50 萬、80 萬及 100 萬。
+在比較速度以前，我生成了總共有 101 個欄位的假資料，其中 1 欄是 id，然後各有 50 欄的數值型及類別型欄位，並且生成了五種不同筆數的資料，分別為 10 萬筆、20 萬筆、50 萬筆、80 萬筆及 100 萬筆。
 
-每個不同的 function，都會執行 20 次，底下所展示的摺線圖，實線的部分代表 20 次測試計算出來的平均值，而底下的影子則代表 95% 的信賴區間。
+每種不同的 function，都會重複執行 20 次，並將每次執行所需的時間記錄下來，底下所展示的摺線圖，實線的部分代表這 20 次測試計算出來的平均值，而影子的部分則代表 95% 的信賴區間。
 
-在實驗的過程裡，我使用的 Pandas 及 Polars 版本，如下所示：
+在實驗的過程裡，我使用了 v2.0.1 的 Pandas 及 v0.17.11 的 Polars。
 
-- Polars (v0.17.11)
-- Pandas (v2.0.1)
+除了 Pandas 既有的 numpy backend 以外，我同時比較了在 Pandas v2.0.0 以後推出的 pyarrow backend，並且在 pip install 的時候遵循 Pandas 的[官方建議](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html)，下載了`performance`及`aws`的 dependencies，來確保 Pandas 能展現最佳效能。
 
-除了 Pandas 既有的 numpy backend 以外，我也比較了在 Pandas v2.0.0 以後才推出的 pyarrow backend，並且在 pip install 的時候遵循 [Pandas 的官方建議](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html)，額外下載了`performance`及`aws`的 dependencies。
-
-圖中的標示意義如下：
+下圖中的標示意義如下：
 
 - Polars - Polars
 - Pandas2 - Pandas using pyarrow backend
@@ -87,9 +78,9 @@ Polars 和 Pandas 有許多相同的 function，但[語法上也有許多需要�
 
 Filter 的部分，我針對數值型欄位及類別型欄位分別進行了兩種 Filter。
 
-數值型的部分，我是透過中位數進行 Filter，結果在 [Filter by Number](#filter-by-number)。
+數值型的部分，我透過中位數進行 Filter，實驗結果在 [Filter by Number](#filter-by-number)。
 
-類別行的部分，我是透過特定字元 ("a") 進行 Filter，結果在 [Filter by Character](#filter-by-character)。
+類別行的部分，我透過特定字元 ("a") 進行 Filter，實驗結果在 [Filter by Character](#filter-by-character)。
 
 #### Filter by Number
 
@@ -137,9 +128,7 @@ Filter 的部分，我針對數值型欄位及類別型欄位分別進行了兩�
 
 ## Conclusion
 
-總而言之，以速度方面考量，Polars 真的值得一試。
-
-Pandas 雖然在近期推出了第二版，加入了使用 pyarrow backend 的選擇，但以不同的 operation 去嘗試，會發現沒辦法在各個面向都取得速度上的進步。
+以速度方面考量，Polars 真的值得一試。Pandas 雖然在近期推出了第二版，加入了使用 pyarrow backend 的選擇，但以不同的 operation 去嘗試，會發現沒辦法在各個面向都取得速度上的進步。
 
 因此，如果有需要快速操作 DataFrame 的需求，就一起來使用 Polars 吧！
 
@@ -150,3 +139,10 @@ Pandas 雖然在近期推出了第二版，加入了使用 pyarrow backend 的�
 - 產生假資料：[gen_data.py](https://github.com/u10000129/polars-vs-pandas/blob/main/gen_data.py)
 - 測試速度：[test_speed.py](https://github.com/u10000129/polars-vs-pandas/blob/main/test_speed.py)
 - 畫圖：[draw.py](https://github.com/u10000129/polars-vs-pandas/blob/main/draw.py)
+
+## Links
+
+- [Polars](https://www.pola.rs/)
+- Polars - [User Guide](https://pola-rs.github.io/polars-book/user-guide/)
+- Polars - [Migrate from Pandas](https://pola-rs.github.io/polars-book/user-guide/migration/pandas/)
+- Polars - [Lazy API](https://pola-rs.github.io/polars-book/user-guide/lazy/using/)
